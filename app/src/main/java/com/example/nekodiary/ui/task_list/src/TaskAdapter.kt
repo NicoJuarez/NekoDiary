@@ -1,4 +1,4 @@
-package com.example.nekodiary.ui.gallery.src
+package com.example.nekodiary.ui.task_list.src
 
 import android.content.Context
 import android.database.Cursor
@@ -23,9 +23,13 @@ class TaskAdapter(context: Context?, c: Cursor?, autoRequery: Boolean) :
     override fun bindView(view: View?, context: Context?, cursor: Cursor?) {
 
         view?.findViewById<TextView>(R.id.title)?.text = cursor?.getString(cursor.getColumnIndex(
-            Task.Contract.FIELD_TITLE))
+            Task.FIELD_TITLE))
 
 
+    }
+
+    override fun swapCursor(newCursor: Cursor?): Cursor {
+        return super.swapCursor(newCursor)
     }
 
 
