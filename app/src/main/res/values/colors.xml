@@ -10,6 +10,7 @@
 
     <!-- seashell pallet Color Palette - https://www.color-hex.com/color-palette/103305-->
     <color name="salmon_light">#ffc1c1</color> <!--base-->
+    <color name="salmon_extra_light">#FFF2F0</color>
     <color name="salmon_medium">#ffaeae</color>
     <color name="salmon_orange">#ffc2ad</color>
     <color name="salmon_lightBlue">#a9bdc3</color>

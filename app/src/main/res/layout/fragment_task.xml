@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.task_list.TaskListFragment"
-    android:background="@color/salmon_light"
+    android:background="@color/salmon_extra_light"
     >
 
     <ListView
@@ -27,7 +27,8 @@
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/salmon_dark"
         app:tint="@color/white"
-        app:srcCompat="@drawable/cat_paw" />
+        app:srcCompat="@drawable/cat_paw"
+        android:contentDescription="@string/description_add_new_habit_dialog" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

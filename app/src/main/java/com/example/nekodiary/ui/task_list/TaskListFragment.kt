@@ -3,6 +3,7 @@ package com.example.nekodiary.ui.task_list
 import android.content.ContentValues
 import android.content.Context
 import android.content.SharedPreferences
+import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.nekodiary.R
 import com.example.nekodiary.data_base.DataBase
 import com.example.nekodiary.data_base.Task
+import com.example.nekodiary.ui.dialog.AddHabitDialog
+import com.example.nekodiary.ui.dialog.NewHabitDialog
 import com.example.nekodiary.ui.task_list.src.TaskAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -21,6 +24,7 @@ class TaskListFragment : Fragment() {
     private lateinit var taskListViewModel: TaskListViewModel
     private var taskCount: Int = 0
     private lateinit var list: ListView
+    private lateinit var nhDialog: NewHabitDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,21 +41,24 @@ class TaskListFragment : Fragment() {
 
         val button: FloatingActionButton = root.findViewById(R.id.fab)
         button.setOnClickListener {
-            DataBase.CRUD(this.context)
-                .insert(
-                    Task(
-                        "Tarea $taskCount",
-                        "Descripción de la tarea",
-                        Task.TYPE_JOB,
-                        Task.STATUS_IN_PROGRESS
-                    )
-                )
-            taskCount++
-            list.deferNotifyDataSetChanged()
-            (list.adapter as TaskAdapter).swapCursor(DataBase.CRUD(this.context).getAllTasks())
+//            addNewHabit()
+//            updateAdapter(DataBase.CRUD(this.context).getAllTasks())
+//            val dialog = AddHabitDialog()
 
-            context?.getSharedPreferences("_default_user", Context.MODE_PRIVATE)?.edit()
-                ?.putInt("task_count", taskCount)?.apply()
+            // first dialog
+//            dialog.listener = View.OnClickListener {
+            nhDialog = NewHabitDialog()
+
+            //second dialog
+            nhDialog.listener = View.OnClickListener {
+                addNewHabit()
+                updateAdapter(DataBase.CRUD(this.context).getAllTasks())
+            }
+
+            nhDialog.show(parentFragmentManager, null)
+//            }
+//
+//            dialog.show(parentFragmentManager, null)
         }
 
         return root
@@ -71,7 +78,29 @@ class TaskListFragment : Fragment() {
     private fun fillList(list: ListView?) {
         list?.adapter =
             TaskAdapter(this.context, (DataBase.CRUD(this.context)).getAllTasks(), false)
-        //list?.adapter = TaskAdapter(this.context, crud.getAllTasks(), false)
 
+    }
+
+    private fun addNewHabit() {
+        DataBase.CRUD(this.context)
+            .insert(
+                nhDialog.task
+//                Task(
+//                    "Tarea $taskCount",
+//                    "Descripción de la tarea",
+//                    Task.TYPE_JOB,
+//                    Task.STATUS_IN_PROGRESS
+//                )
+            )
+
+        taskCount++
+        context?.getSharedPreferences("_default_user", Context.MODE_PRIVATE)?.edit()
+            ?.putInt("task_count", taskCount)?.apply()
+    }
+
+    private fun updateAdapter(cursor: Cursor) {
+        //list.deferNotifyDataSetChanged()
+        (list.adapter as TaskAdapter).swapCursor(cursor)
+        list.setSelection(list.adapter.count - 1)
     }
 }
