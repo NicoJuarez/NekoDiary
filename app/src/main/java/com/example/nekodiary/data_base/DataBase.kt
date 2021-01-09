@@ -52,6 +52,16 @@ class DataBase(
             return this.insert(task.getValues())
         }
 
+        fun reset(){
+            val db = helper.readableDatabase
+            db.execSQL("DELETE FROM ${Task.TABLE_NAME}")
+            //database.execSQL()
+        }
+
+        fun version(): Int{
+            return database.version
+        }
+
     }
 
 

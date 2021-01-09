@@ -1,10 +1,14 @@
 package com.example.nekodiary.ui.dialog
 
+import android.animation.Animator
 import android.app.ActionBar
-import android.os.Bundle
+import android.content.Context
+import android.os.*
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioGroup
@@ -12,12 +16,16 @@ import androidx.fragment.app.DialogFragment
 import com.example.nekodiary.R
 import com.example.nekodiary.data_base.DataBase
 import com.example.nekodiary.data_base.Task
+import com.example.nekodiary.ui.fx.ViewShaker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class NewHabitDialog(var listener: View.OnClickListener? = null) : DialogFragment() {
+class NewTaskDialog(var listener: View.OnClickListener? = null) : DialogFragment() {
 
-    lateinit var task: Task
+    private lateinit var task: Task
+    private lateinit var titleLayout: TextInputLayout
+    private var shaking = false
+    private val shakeTiming = 200L
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,22 +40,31 @@ class NewHabitDialog(var listener: View.OnClickListener? = null) : DialogFragmen
 
     private fun configureComponents(view: View) {
 
-        view.findViewById<ImageView>(R.id.confirm_button).setOnClickListener {
+        titleLayout = view.findViewById(R.id.title_input_layout)
 
-            var a = view.findViewById<TextInputEditText>(R.id.title_input_edit).text.toString()
-                .isEmpty()
-            var b =
-                view.findViewById<TextInputEditText>(R.id.description_input_edit).text.toString()
-                    .isEmpty()
-            if (a || b) {
-                val layout = view.findViewById<TextInputLayout>(R.id.title_input_layout)
-                if (a) {
-                    layout.error = "El campo está vacío. Es requerido"
-                }else{
-                    layout.error = null
+        val vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        view.findViewById<ImageView>(R.id.confirm_button).setOnClickListener {
+            if (view.findViewById<TextInputEditText>(R.id.title_input_edit)
+                    .text.toString().isEmpty()
+            ) {
+
+                titleLayout.error = "El campo está vacío. Es requerido"
+                if (vibrator.hasVibrator() && !shaking) {
+
+                    shakeLayout(vibrator)
+
+                    shaking = true;
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        shaking = false
+                        ViewShaker.stop()
+                    }, shakeTiming + 100L)
                 }
 
             } else {
+                titleLayout.error = null
+
                 this.task = Task(
                     view.findViewById<TextInputEditText>(R.id.title_input_edit).text.toString(),
                     view.findViewById<TextInputEditText>(R.id.description_input_edit).text.toString(),
@@ -61,7 +78,7 @@ class NewHabitDialog(var listener: View.OnClickListener? = null) : DialogFragmen
                 )
                 listener?.onClick(it)
                 dialog?.dismiss()
-            }
+            } //end else
         }// end listener
 
         view.findViewById<ImageView>(R.id.cancel_button).setOnClickListener {
@@ -82,8 +99,23 @@ class NewHabitDialog(var listener: View.OnClickListener? = null) : DialogFragmen
         }
     }
 
-    fun setOnClickListener(listener: View.OnClickListener) {
-        this.listener = listener
+    fun getTask(): Task {
+        return this.task
+    }
+
+    private fun shakeLayout(vibrator: Vibrator) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            vibrator.vibrate(
+                VibrationEffect.createOneShot(
+                    shakeTiming,
+                    VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
+        else
+            vibrator.vibrate(shakeTiming)
+
+        ViewShaker.shake(titleLayout)
+
     }
 
 

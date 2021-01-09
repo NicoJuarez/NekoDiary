@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.nekodiary.R
 import org.w3c.dom.Text
 
-class AddHabitDialog(var listener: View.OnClickListener? = null) : DialogFragment() {
+class AddTaskDialog(var listener: View.OnClickListener? = null) : DialogFragment() {
 
 
 
@@ -46,9 +46,7 @@ class AddHabitDialog(var listener: View.OnClickListener? = null) : DialogFragmen
         }
     }
 
-    fun setOnClickListener(listener: View.OnClickListener){
-        this.listener = listener
-    }
+
 
 
 }

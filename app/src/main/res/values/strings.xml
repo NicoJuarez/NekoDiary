@@ -31,6 +31,9 @@
     <string name="radio_single">Tarea única</string>
     <string name="radio_long">Tarea repetitiva</string>
 
+    <!--    Data Base-->
+    <string name="db_version">Versión base de datos: </string>
+
     <!--    image description-->
     <string name="img_desc_habit_once">Hábito de una única vez</string>
 </resources>

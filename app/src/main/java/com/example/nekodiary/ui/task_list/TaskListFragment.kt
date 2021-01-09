@@ -1,21 +1,18 @@
 package com.example.nekodiary.ui.task_list
 
-import android.content.ContentValues
 import android.content.Context
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.nekodiary.R
 import com.example.nekodiary.data_base.DataBase
-import com.example.nekodiary.data_base.Task
-import com.example.nekodiary.ui.dialog.AddHabitDialog
-import com.example.nekodiary.ui.dialog.NewHabitDialog
+import com.example.nekodiary.ui.dialog.NewTaskDialog
 import com.example.nekodiary.ui.task_list.src.TaskAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -24,7 +21,7 @@ class TaskListFragment : Fragment() {
     private lateinit var taskListViewModel: TaskListViewModel
     private var taskCount: Int = 0
     private lateinit var list: ListView
-    private lateinit var nhDialog: NewHabitDialog
+    private lateinit var nhDialog: NewTaskDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +44,7 @@ class TaskListFragment : Fragment() {
 
             // first dialog
 //            dialog.listener = View.OnClickListener {
-            nhDialog = NewHabitDialog()
+            nhDialog = NewTaskDialog()
 
             //second dialog
             nhDialog.listener = View.OnClickListener {
@@ -60,6 +57,8 @@ class TaskListFragment : Fragment() {
 //
 //            dialog.show(parentFragmentManager, null)
         }
+
+        root.findViewById<TextView>(R.id.db_version_caption).text = "${context?.resources?.getString(R.string.db_version)} ${(DataBase.CRUD(requireContext())).version()}"
 
         return root
     }
@@ -84,7 +83,7 @@ class TaskListFragment : Fragment() {
     private fun addNewHabit() {
         DataBase.CRUD(this.context)
             .insert(
-                nhDialog.task
+                nhDialog.getTask()
 //                Task(
 //                    "Tarea $taskCount",
 //                    "Descripción de la tarea",
