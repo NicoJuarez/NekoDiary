@@ -15,5 +15,7 @@
     <color name="salmon_orange">#ffc2ad</color>
     <color name="salmon_lightBlue">#a9bdc3</color>
     <color name="salmon_dark">#ea7d7d</color>
+    <color name="failed_color">#CD2849</color>
+    <color name="successful_color">#34EA62</color>
 
 </resources>

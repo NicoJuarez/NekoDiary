@@ -12,7 +12,12 @@ import androidx.core.content.ContextCompat
 import com.example.nekodiary.R
 import com.example.nekodiary.data_base.Task
 
-class TaskAdapter(context: Context?, c: Cursor?, autoRequery: Boolean) :
+class TaskAdapter(
+    context: Context?,
+    c: Cursor?,
+    autoRequery: Boolean,
+    var listener: View.OnClickListener? = null
+) :
     CursorAdapter(context, c, autoRequery) {
 
     override fun newView(context: Context?, cursor: Cursor?, parent: ViewGroup?): View {
@@ -48,17 +53,24 @@ class TaskAdapter(context: Context?, c: Cursor?, autoRequery: Boolean) :
                 )
             )
 
-            view.findViewById<ImageView>(R.id.status).setImageDrawable(
-                ContextCompat.getDrawable(context, R.drawable.ic_pending_task_24)
-            )
+            view.findViewById<ImageView>(R.id.status).apply {
+                setImageDrawable(
+                    ContextCompat.getDrawable(context, R.drawable.ic_pending_task_24)
+                )
+                setOnClickListener {
+                    this@TaskAdapter.onclick(it)
+                }
+            }
+
+            view.findViewById<TextView>(R.id.item_id).text = cursor.getString(cursor.getColumnIndex("_id"))
         }
 
-
     }
 
-    override fun swapCursor(newCursor: Cursor?): Cursor {
-        return super.swapCursor(newCursor)
+    private fun onclick(view: View){
+        listener?.onClick(view)
     }
+
 
 
 }

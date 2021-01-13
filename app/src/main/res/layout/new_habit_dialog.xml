@@ -9,10 +9,9 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@color/salmon_extra_light"
-        app:cardCornerRadius="16dp"
         android:layout_marginHorizontal="12dp"
-        >
+        app:cardBackgroundColor="@color/salmon_extra_light"
+        app:cardCornerRadius="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -53,7 +52,8 @@
                     android:background="@android:color/transparent"
                     android:singleLine="true"
                     android:textColor="@color/salmon_dark"
-                    app:boxBackgroundColor="@color/salmon_dark" />
+                    app:boxBackgroundColor="@color/salmon_dark"
+                    android:inputType="textCapSentences"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -77,7 +77,8 @@
                     android:background="@android:color/transparent"
                     android:singleLine="true"
                     android:textColor="@color/salmon_dark"
-                    app:boxBackgroundColor="@android:color/transparent" />
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:inputType="textCapSentences"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -101,20 +102,12 @@
                 app:layout_constraintStart_toStartOf="@id/radio_title"
                 app:layout_constraintTop_toBottomOf="@id/radio_title">
 
-                <RadioButton
-                    android:id="@+id/usual"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_baseline_usual_task_24"
-                    android:drawablePadding="5dp"
-                    android:text="@string/radio_usual"
-                    android:textColor="@color/black"
-                    app:drawableTint="@color/salmon_dark" />
 
                 <RadioButton
                     android:id="@+id/single"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:drawableEnd="@drawable/ic_baseline_single_task_24"
                     android:drawablePadding="5dp"
                     android:text="@string/radio_single"
@@ -128,6 +121,16 @@
                     android:drawableEnd="@drawable/ic_baseline_long_task_24"
                     android:drawablePadding="5dp"
                     android:text="@string/radio_long"
+                    android:textColor="@color/black"
+                    app:drawableTint="@color/salmon_dark" />
+
+                <RadioButton
+                    android:id="@+id/usual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_baseline_usual_task_24"
+                    android:drawablePadding="5dp"
+                    android:text="@string/radio_usual"
                     android:textColor="@color/black"
                     app:drawableTint="@color/salmon_dark" />
 

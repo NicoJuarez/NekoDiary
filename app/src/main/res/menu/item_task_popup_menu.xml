@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        >
+        <item
+            android:id="@+id/delete"
+            android:title="@string/delete_task_popup_menu" />
+
+        <item
+            android:id="@+id/ready"
+            android:title="@string/ready_task_popup_menu" />
+        <item
+            android:id="@+id/failed"
+            android:title="@string/failure_task_popup_menu" />
+    </group>
+
+    <group
+        android:menuCategory="secondary"
+        >
+        <item
+            android:id="@+id/edit"
+            android:title="@string/edit_task_popup_menu" />
+    </group>
+</menu>

@@ -62,6 +62,10 @@ class DataBase(
             return database.version
         }
 
+        fun delete(id: Int){
+            helper.readableDatabase.execSQL("DELETE FROM ${Task.TABLE_NAME} WHERE ${Task.TABLE_NAME}._id = $id")
+        }
+
     }
 
 

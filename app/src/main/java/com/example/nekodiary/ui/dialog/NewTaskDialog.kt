@@ -90,13 +90,18 @@ class NewTaskDialog(var listener: View.OnClickListener? = null) : DialogFragment
     override fun onStart() {
         super.onStart()
         dialog?.let {
-            it.window?.setLayout(
-                ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.WRAP_CONTENT
-            )
+            it.window?.apply{
+                setLayout(
+                    ActionBar.LayoutParams.MATCH_PARENT,
+                    ActionBar.LayoutParams.WRAP_CONTENT
+                )
+                findViewById<RadioGroup>(R.id.radio_group).check(R.id.single)
+            }
             it.setCanceledOnTouchOutside(false)
             it.window?.setBackgroundDrawableResource(android.R.color.transparent)
         }
+
+
     }
 
     fun getTask(): Task {
