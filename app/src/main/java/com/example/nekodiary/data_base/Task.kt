@@ -2,12 +2,44 @@ package com.example.nekodiary.data_base
 
 import android.content.ContentValues
 
-class Task(
-    private var title: String? = "",
-    private var description: String? = "task",
-    private var type: String = TYPE_JOB,
-    private var status: String = STATUS_IN_PROGRESS
-    ): ITask {
+class Task() : ITask {
+
+    private val values = ContentValues()
+
+    constructor(title: String, description: String, type: String, status: String):this(){
+        setTitle(title)
+        setDescription(description)
+        setType(type)
+        setStatus(status)
+    }
+
+    fun setTitle(title: String){
+        values.put(FIELD_TITLE, title)
+    }
+
+    fun setDescription(description: String){
+        values.put(FIELD_DESCRIPTION, description)
+    }
+
+    fun setType(type: String){
+        values.put(FIELD_TYPE, type)
+    }
+
+    fun setStatus(status: String){
+        values.put(FIELD_STATUS, status)
+    }
+
+    fun setID (id: Int){
+        setID(id.toString())
+    }
+
+    fun setID(id: String){
+        values.put(FIELD_ID, id)
+    }
+
+    override fun getValues(): ContentValues {
+        return values
+    }
 
     companion object {
 
@@ -21,7 +53,7 @@ class Task(
 
         const val TABLE_NAME: String = "tasks"
 
-        private const val FIELD_ID: String = "_id"
+        const val FIELD_ID: String = "_id"
 
         const val FIELD_TITLE: String = "title"
         const val FIELD_DESCRIPTION: String = "desc"
@@ -34,15 +66,5 @@ class Task(
 
     }
 
-    override fun getValues():ContentValues {
-        val values = ContentValues()
-
-        values.put(FIELD_TITLE, this.title)
-        values.put(FIELD_DESCRIPTION, this.description)
-        values.put(FIELD_TYPE, this.type)
-        values.put(FIELD_STATUS, this.status)
-
-        return values
-    }
 
 }

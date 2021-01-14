@@ -2,12 +2,21 @@ package com.example.nekodiary.ui
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.os.Bundle
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
+import com.example.nekodiary.data_base.DataBase
 
 open class BaseFragment: Fragment() {
+
+    protected lateinit var database: DataBase.CRUD
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        database = DataBase.CRUD(context)
+    }
 
     protected fun setTint(context: Context, view: ImageView, res:Int){
 

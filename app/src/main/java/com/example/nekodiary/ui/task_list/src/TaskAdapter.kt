@@ -1,6 +1,7 @@
 package com.example.nekodiary.ui.task_list.src
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.CursorAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.example.nekodiary.R
 import com.example.nekodiary.data_base.Task
@@ -54,23 +56,66 @@ class TaskAdapter(
             )
 
             view.findViewById<ImageView>(R.id.status).apply {
+                var imgSrc: Int
+                var color: ColorStateList
+                when (cursor.getString(cursor.getColumnIndex(Task.FIELD_STATUS))) {
+                    Task.STATUS_IN_PROGRESS -> {
+                        imgSrc = R.drawable.ic_pending_task_24
+                        color = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.salmon_light
+                            )
+                        )
+                    }
+                    Task.STATUS_COMPLETED -> {
+                        imgSrc = R.drawable.ic_baseline_successful_task_24
+                        color = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.successful_color
+                            )
+                        )
+                    }
+                    Task.STATUS_FAILED -> {
+                        imgSrc = R.drawable.ic_baseline_failed_task_24
+                        color = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.failed_color
+                            )
+                        )
+                    }
+                    else -> {
+                        imgSrc = R.drawable.ic_pending_task_24
+                        color = ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.salmon_light
+                            )
+                        )
+                    }
+                }
                 setImageDrawable(
-                    ContextCompat.getDrawable(context, R.drawable.ic_pending_task_24)
+                    ContextCompat.getDrawable(context, imgSrc)
                 )
+
+                view.findViewById<CardView>(R.id.card).backgroundTintList = color
+
                 setOnClickListener {
                     this@TaskAdapter.onclick(it)
                 }
             }
 
-            view.findViewById<TextView>(R.id.item_id).text = cursor.getString(cursor.getColumnIndex("_id"))
+            view.findViewById<TextView>(R.id.item_id).text =
+                cursor.getString(cursor.getColumnIndex("_id"))
         }
 
     }
 
-    private fun onclick(view: View){
+    private fun onclick(view: View) {
         listener?.onClick(view)
     }
-
 
 
 }

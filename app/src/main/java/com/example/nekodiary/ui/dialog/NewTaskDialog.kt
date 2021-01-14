@@ -12,6 +12,7 @@ import android.view.animation.Animation
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.example.nekodiary.R
 import com.example.nekodiary.data_base.DataBase
@@ -90,7 +91,7 @@ class NewTaskDialog(var listener: View.OnClickListener? = null) : DialogFragment
     override fun onStart() {
         super.onStart()
         dialog?.let {
-            it.window?.apply{
+            it.window?.apply {
                 setLayout(
                     ActionBar.LayoutParams.MATCH_PARENT,
                     ActionBar.LayoutParams.WRAP_CONTENT
@@ -108,6 +109,7 @@ class NewTaskDialog(var listener: View.OnClickListener? = null) : DialogFragment
         return this.task
     }
 
+
     private fun shakeLayout(vibrator: Vibrator) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             vibrator.vibrate(
@@ -117,7 +119,12 @@ class NewTaskDialog(var listener: View.OnClickListener? = null) : DialogFragment
                 )
             )
         else
+            @Suppress("DEPRECATION")
             vibrator.vibrate(shakeTiming)
+
+
+
+
 
         ViewShaker.shake(titleLayout)
 

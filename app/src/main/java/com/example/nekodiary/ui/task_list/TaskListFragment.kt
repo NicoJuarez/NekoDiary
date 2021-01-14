@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Build.VERSION.SDK
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.nekodiary.R
 import com.example.nekodiary.data_base.DataBase
+import com.example.nekodiary.data_base.Task
 import com.example.nekodiary.ui.BaseFragment
 import com.example.nekodiary.ui.dialog.NewTaskDialog
 import com.example.nekodiary.ui.task_list.src.TaskAdapter
@@ -129,30 +131,33 @@ class TaskListFragment : BaseFragment() {
                             Toast.makeText(requireContext(), "EDIT", Toast.LENGTH_SHORT).show()
                         }
                         R.id.ready -> {
-                            currentView.findViewById<ImageView>(R.id.status).apply {
-
-//                                setTint(
-//                                    context, this,
-//                                    R.color.successful_color
+//                            currentView.findViewById<ImageView>(R.id.status).apply {
 //
+//
+//                                (this.parent.parent as CardView).backgroundTintList =
+//                                    ColorStateList.valueOf(
+//                                        ContextCompat.getColor(
+//                                            context,
+//                                            R.color.successful_color
+//                                        )
+//                                    )
+//
+//                                setImageDrawable(
+//                                    ContextCompat.getDrawable(
+//                                        this@TaskListFragment.requireContext(),
+//                                        R.drawable.ic_baseline_successful_task_24
+//                                    )
 //                                )
+//
+//                            }
 
-                                (this.parent.parent as CardView).backgroundTintList =
-                                    ColorStateList.valueOf(
-                                        ContextCompat.getColor(
-                                            context,
-                                            R.color.successful_color
-                                        )
-                                    )
 
-                                setImageDrawable(
-                                    ContextCompat.getDrawable(
-                                        this@TaskListFragment.requireContext(),
-                                        R.drawable.ic_baseline_successful_task_24
-                                    )
-                                )
-
-                            }
+                            database.update(Task().apply {
+                                setStatus(Task.STATUS_COMPLETED)
+                                setID(currentView.findViewById<TextView>(R.id.item_id).text.toString())
+                            })
+//                            Log.d("READY::", "fillList: ${currentView.findViewById<TextView>(R.id.item_id).text.toString().toInt()}")
+                            updateAdapter()
                         }
                         R.id.failed -> {
                             currentView.findViewById<ImageView>(R.id.status).apply {
