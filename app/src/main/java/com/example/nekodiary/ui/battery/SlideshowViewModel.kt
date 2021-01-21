@@ -1,4 +1,4 @@
-package com.example.nekodiary.ui.slideshow
+package com.example.nekodiary.ui.battery
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

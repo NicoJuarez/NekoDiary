@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_task" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.nekodiary.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_battery"
+        android:name="com.example.nekodiary.ui.battery.BatteryFragment"
+        android:label="@string/menu_battery"
+        tools:layout="@layout/fragment_battery" />
 </navigation>
