@@ -9,7 +9,7 @@ import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import com.example.nekodiary.activities.BaseActivity
 import com.example.nekodiary.data_base.DataBase
-import com.example.nekodiary.user.Preferences
+import com.example.nekodiary.util.Preferences
 
 open class BaseFragment: Fragment() {
 
@@ -27,10 +27,8 @@ open class BaseFragment: Fragment() {
         ImageViewCompat.setImageTintList(view, colorStateList)
     }
 
-    protected fun getPrefs(): Preferences?{
-        return context?.let {
-            (it as BaseActivity).preferences
-        }
+    protected fun getPrefs(): Preferences{
+        return (context as BaseActivity).preferences
     }
 
 

@@ -3,7 +3,7 @@ package com.example.nekodiary.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
-import com.example.nekodiary.user.Preferences
+import com.example.nekodiary.util.Preferences
 
 open class BaseActivity : AppCompatActivity() {
 

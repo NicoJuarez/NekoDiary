@@ -13,7 +13,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.nekodiary.R
 import com.example.nekodiary.ui.BaseFragment
-import com.example.nekodiary.user.Preferences
+import com.example.nekodiary.util.Preferences
 
 class BatteryFragment : BaseFragment() {
 
